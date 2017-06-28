@@ -10,10 +10,7 @@ class PostIntegrationTest extends TestCase
 
     public function test_return_correct_url_post()
     {
-        $user = $this->defaultUser();
-        $post = factory(Post::class)->make();
-
-        $user->posts()->save($post);
+        $post = $this->createPost();
 
         $url_true = env('APP_URL') . "/posts/" . $post->id . "-" . $post->slug;
         $url = $post->url;
@@ -24,12 +21,9 @@ class PostIntegrationTest extends TestCase
 
     public function test_a_slug_is_generated_and_saved_to_the_database()
     {
-        $user = $this->defaultUser();
-        $post = factory(Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Como instalar Laravel',
         ]);
-
-        $user->posts()->save($post);
 
         $this->seeInDatabase('posts', [
             'slug' => 'como-instalar-laravel',

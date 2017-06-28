@@ -1,11 +1,6 @@
 <?php
 
-use App\Post;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
-class ShowPostTest extends TestCase
+class ShowPostTest extends FeatureTestCase
 {
 
     function test_a_user_can_see_the_post_details()
@@ -34,15 +29,10 @@ class ShowPostTest extends TestCase
     function test_old_urls_are_redirected()
     {
         // Having
-        $user = $this->defaultUser();
 
-        $this->actingAs($user);
-
-        $post = factory(\App\Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Old title',
         ]);
-
-        $user->posts()->save($post);
 
         $url = $post->url;
 
